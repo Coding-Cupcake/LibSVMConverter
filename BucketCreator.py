@@ -7,6 +7,11 @@ INPUT_DIR_S = os.curdir + "/output_lib_svm/shuffled/"
 OUTPUT_DIR = os.curdir + "/output_buckets/"
 
 
+def check_folders():
+    if not os.path.exists(OUTPUT_DIR):
+        os.makedirs(OUTPUT_DIR)
+
+
 def pre_processing():
     folds = open("config.cfg", 'r')
     line_s = folds.readlines()
@@ -32,10 +37,13 @@ for inputFile in os.listdir(INPUT_DIR_O):
         for entry in range(end + 1):
             choice = random.randint(entry, end)
             lines[entry], lines[choice] = lines[choice], lines[entry]
+    if not os.path.exists(INPUT_DIR_S):
+        os.makedirs(INPUT_DIR_S)
     with open(INPUT_DIR_S + os.path.splitext(inputFile)[0] + "_Shuffled", 'w') as result:
         result.writelines(lines)
 
 FOLD = pre_processing()
+check_folders()
 
 for shuffledFile in os.listdir(INPUT_DIR_S):
     clean_up(OUTPUT_DIR + os.path.splitext(shuffledFile)[0])

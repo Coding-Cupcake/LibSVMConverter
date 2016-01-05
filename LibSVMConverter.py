@@ -13,6 +13,8 @@ def pre_processing():
 
 for currentFile in os.listdir(DIRECTORY):
         if currentFile.endswith('.csv'):
+            if not os.path.exists(DIRECTORY_OUT):
+                os.makedirs(DIRECTORY_OUT)
             output = open(DIRECTORY_OUT + os.path.splitext(currentFile)[0] + "_Out", 'w')
             source = open(DIRECTORY + currentFile, 'r')
             class_label = pre_processing()
